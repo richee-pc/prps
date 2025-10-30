@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>미션: 아이디어를 코드로</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome (Icons) CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Inter 폰트 또는 기본 sans-serif 폰트 적용 */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+        }
+        /* 타임라인 스타일 */
+        .timeline-item {
+            position: relative;
+            padding-left: 2.5rem; /* 40px */
+            padding-bottom: 2rem; /* 32px */
+            border-left-width: 2px;
+            border-color: #e5e7eb; /* gray-200 */
+        }
+        .timeline-item:last-child {
+            border-left: 2px solid transparent; /* 마지막 항목의 꼬리 제거 */
+            padding-bottom: 0;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -0.5625rem; /* -9px */
+            top: 0.25rem; /* 4px */
+            width: 1.125rem; /* 18px */
+            height: 1.125rem; /* 18px */
+            border-radius: 50%;
+            background-color: #fff; /* white */
+            border-width: 4px;
+        }
+        
+        /* Table Style */
+        .rubric-table th, .rubric-table td {
+            padding: 1rem; /* 16px */
+            vertical-align: top;
+            border-bottom-width: 1px;
+            border-color: #4b5563; /* gray-600 */
+        }
+        .rubric-table thead th {
+            background-color: #1f2937; /* gray-800 */
+        }
+        .rubric-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        .rubric-table .criteria-level {
+            padding: 0.75rem; /* 12px */
+        }
+        .rubric-table .criteria-level:not(:last-child) {
+            border-bottom: 1px dashed #4b5563; /* gray-600 */
+        }
+        .rubric-table .level-a { background-color: rgba(56, 189, 248, 0.1); } /* sky-500/10 */
+        .rubric-table .level-b { background-color: rgba(209, 213, 219, 0.05); } /* gray-300/5 */
+        .rubric-table .level-c { background-color: rgba(107, 114, 128, 0.05); } /* gray-500/5 */
+        .rubric-table .level-d { background-color: rgba(248, 113, 113, 0.05); } /* red-400/5 */
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 leading-relaxed">
+
+    <div class="max-w-4xl mx-auto p-6 sm:p-10 bg-gray-800 my-10 rounded-2xl shadow-2xl border border-gray-700">
+
+        <!-- 1. 헤더 -->
+        <header class="text-center mb-10 border-b border-indigo-500 pb-6">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-300 mb-2">
+                미션: 아이디어를 코드로
+            </h1>
+            <p class="text-lg font-medium text-gray-400">6주간의 프로그래밍 팀 프로젝트 수행평가 브리핑</p>
+        </header>
+
+        <!-- 2. 미션 브리핑 (내용 동일) -->
+        <section id="briefing" class="mb-12">
+            <h2 class="text-3xl font-bold text-indigo-400 mb-4 flex items-center">
+                <i class="fa-solid fa-bullhorn mr-3"></i>1. 미션 브리핑
+            </h2>
+            <div class="bg-gray-700 p-6 rounded-lg shadow-inner text-gray-200 space-y-4">
+                <p class="text-lg">정보 요원 여러분,</p>
+                <p>이번 6주간의 미션은 단순한 코딩 과제가 아닙니다. 이것은 여러분의 아이디어를 실제 작동하는 프로그램으로 구현하는 '창조'의 과정입니다.</p>
+                <p>성적을 넘어, 교실 밖의 실제 문제를 발견하고, 논리적으로 분석하며, 팀과 협력하여 해결하는 '진짜 실력'을 증명할 시간입니다. 이 과정에서 여러분은 막히고, 토론하고, 때로는 좌절하겠지만, 결국 문제를 해결해내는 '개발자'의 경험을 하게 될 것입니다.</p>
+                <p class="font-bold text-xl text-cyan-300">여러분의 번뜩이는 아이디어로 세상을 "헉!" 하게 만들 준비가 되었습니까? <br>미션을 수락하십시오.</p>
+            </div>
+        </section>
+
+        <!-- 3. 프로젝트 대시보드 (내용 동일 - C언어 추가됨) -->
+        <section id="dashboard" class="mb-12">
+            <h2 class="text-3xl font-bold text-indigo-400 mb-6 flex items-center">
+                <i class="fa-solid fa-chart-pie mr-3"></i>2. 프로젝트 대시보드
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="bg-gray-700 p-5 rounded-lg shadow-lg flex items-start">
+                    <i class="fa-solid fa-calendar-days text-3xl text-cyan-400 mt-1 mr-4"></i>
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-100">미션 기간</h3>
+                        <p class="text-gray-300">총 6주 (금일 1차시 ~ 6차시 최종 발표)</p>
+                    </div>
+                </div>
+                <div class="bg-gray-700 p-5 rounded-lg shadow-lg flex items-start">
+                    <i class="fa-solid fa-crosshairs text-3xl text-cyan-400 mt-1 mr-4"></i>
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-100">핵심 목표</h3>
+                        <p class="text-gray-300">팀원과 협력하여 실제 문제를 해결하는 '완성도 높은' 프로그램 개발</p>
+                    </div>
+                </div>
+                <div class="bg-gray-700 p-5 rounded-lg shadow-lg flex items-start">
+                    <i class="fa-solid fa-users text-3xl text-cyan-400 mt-1 mr-4"></i>
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-100">팀 구성</h3>
+                        <p class="text-gray-300">3~4인 1조 (1차시 내 자율 구성)</p>
+                    </div>
+                </div>
+                <div class="bg-gray-700 p-5 rounded-lg shadow-lg flex items-start">
+                    <i class="fa-solid fa-laptop-code text-3xl text-cyan-400 mt-1 mr-4"></i>
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-100">주요 무기</h3>
+                        <p class="text-gray-300">Python, C언어, VSCode, Anaconda, 그리고 여러분의 창의적인 뇌!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 최종 제출물 (내용 동일) -->
+        <section id="deliverables" class="mb-12">
+            <h2 class="text-3xl font-bold text-indigo-400 mb-6 flex items-center">
+                <i class="fa-solid fa-clipboard-check mr-3"></i>3. 최종 제출물
+            </h2>
+            <p class="text-gray-400 mb-6">미션 완료를 위해 다음 3가지 산출물을 기한 내에 정확히 제출해야 합니다. 기한 엄수는 기본입니다.</p>
+            
+            <div class="space-y-6">
+                <!-- 제출물 1 -->
+                <div class="bg-gray-700 p-6 rounded-lg shadow-lg border-l-4 border-cyan-400">
+                    <span class="inline-block bg-cyan-200 text-cyan-800 text-sm font-bold px-3 py-1 rounded-full mb-3">[팀 제출]</span>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">최종 발표 자료 (Canva 사용)</h3>
+                    <p class="text-gray-300 mb-4">단순한 코드 나열이 아닌, '프로젝트의 여정'을 담아내야 합니다.</p>
+                    <p class="text-sm font-semibold text-gray-300 mb-1">필수 포함:</p>
+                    <p class="text-sm text-gray-400">팀명, 주제 선정 이유, 핵심 알고리즘 설계도 (순서도, 의사코드 등), 수집/분석 자료, 최종 코드의 핵심 로직 설명, 시연 영상/스크린샷, 팀원별 역할 및 기여도.</p>
+                </div>
+
+                <!-- 제출물 2 -->
+                <div class="bg-gray-700 p-6 rounded-lg shadow-lg border-l-4 border-cyan-400">
+                    <span class="inline-block bg-cyan-200 text-cyan-800 text-sm font-bold px-3 py-1 rounded-full mb-3">[팀 제출]</span>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">AI 활용 명세서</h3>
+                    <p class="text-gray-300 mb-4">AI(ChatGPT, Copilot 등)는 훌륭한 보조 도구입니다. 어떻게 '활용'했는지, AI의 도움을 어떻게 검증하고 개선했는지 투명하게 공유합니다.</p>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfaptqWQ5w5taDWGVFbTvtYvH3dWkn20XOqc0qf6EIdKuWphg/viewform?usp=dialog" target="_blank" class="inline-block bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                        <i class="fa-solid fa-arrow-up-right-from-square mr-2"></i>AI 활용 명세서 제출 (Google Form)
+                    </a>
+                </div>
+
+                <!-- 제출물 3 -->
+                <div class="bg-gray-700 p-6 rounded-lg shadow-lg border-l-4 border-green-400">
+                    <span class="inline-block bg-green-200 text-green-800 text-sm font-bold px-3 py-1 rounded-full mb-3">[개별 제출]</span>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">자기 및 동료 평가</h3>
+                    <p class="text-gray-300 mb-4">프로젝트의 진정한 성공은 '함께' 성장하는 것입니다. 6주간의 여정을 돌아보며 공정하고 솔직하게, 그리고 '근거에 기반'하여 평가합니다.</p>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSd7akRl538NqLLQN-a0v28CZjr3nhswJkK2sG2LxF1BHMR0lg/viewform?usp=publish-editor" target="_blank" class="inline-block bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                        <i class="fa-solid fa-arrow-up-right-from-square mr-2"></i>자기 및 동료 평가 제출 (Google Form)
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. 6주간의 여정 (내용 동일) -->
+        <section id="sprint" class="mb-12">
+            <h2 class="text-3xl font-bold text-indigo-400 mb-6 flex items-center">
+                <i class="fa-solid fa-route mr-3"></i>4. 6주간의 여정 (The 6-Week Sprint)
+            </h2>
+            <p class="text-gray-400 mb-8">시간 관리는 이 미션의 핵심입니다. 주차별 목표를 명확히 인지하고 완수하십시오.</p>
+            
+            <!-- 타임라인 -->
+            <div class="relative">
+                <!-- 1차시 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot border-indigo-400"></div>
+                    <span class="text-sm font-semibold text-gray-400">1차시</span>
+                    <h3 class="text-xl font-bold text-indigo-300 mt-1 mb-2">[LAUNCH] 팀 빌딩 및 환경 구축</h3>
+                    <p class="font-medium text-gray-200 mb-3">Mission: 승리를 위한 최고의 팀을 구성하고, 개발 환경을 완벽히 세팅한다.</p>
+                    <ul class="list-disc list-outside text-gray-300 space-y-1 pl-5">
+                        <li>Task 1: 팀 구성 및 프로젝트 주제 선정 (아이디어 구체화)</li>
+                        <li>Task 2: '가상컴퓨터(VM)' 설치 (아래 '필수 자원' 매뉴얼 참고)</li>
+                        <li>Task 3: 개발 환경 구축 (Anaconda, VSCode 설치 및 설정)</li>
+                    </ul>
+                </div>
+                <!-- 2차시 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot border-gray-200"></div>
+                    <span class="text-sm font-semibold text-gray-400">2차시</span>
+                    <h3 class="text-xl font-bold text-gray-100 mt-1 mb-2">[PLAN] 자료 조사 및 알고리즘 설계</h3>
+                    <p class="font-medium text-gray-200 mb-3">Mission: 아이디어를 '설계도'로 만든다.</p>
+                    <p class="text-gray-300">Task: 국내/외 선행 자료 심층 조사, 프로젝트의 핵심 기능 정의, 알고리즘 구상 (순서도, 의사 코드 등 구체적인 설계도 작성)</p>
+                </div>
+                <!-- 3차시 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot border-gray-200"></div>
+                    <span class="text-sm font-semibold text-gray-400">3차시</span>
+                    <h3 class="text-xl font-bold text-gray-100 mt-1 mb-2">[BUILD] 설계 및 프로토타이핑</h3>
+                    <p class="font-medium text-gray-200 mb-3">Mission: 본격적인 코드 구현을 시작한다.</p>
+                    <ul class="list-disc list-outside text-gray-300 space-y-1 pl-5">
+                        <li>Task 1: (2차시 연장) 알고리즘 상세 설계 완료</li>
+                        <li>Task 2: 핵심 기능(모듈)부터 코드 제작 시작 (프로토타입 빌드)</li>
+                        <li>Task 3: 팀원 간 코드 공유 및 버전 관리 룰 정하기 (예: Git, Google Drive)</li>
+                    </ul>
+                </div>
+                <!-- 4차시 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot border-gray-200"></div>
+                    <span class="text-sm font-semibold text-gray-400">4차시</span>
+                    <h3 class="text-xl font-bold text-gray-100 mt-1 mb-2">[DEVELOP] 코드 구현 및 고도화</h3>
+                    <p class="font-medium text-gray-200 mb-3">Mission: 기능 확장 및 발견되는 오류를 수정한다.</p>
+                    <ul class="list-disc list-outside text-gray-300 space-y-1 pl-5">
+                        <li>Task 1: 팀원 간 코드 리뷰 및 통합 (중요!)</li>
+                        <li>Task 2: 발견되는 버그 수정 및 예외 처리 로직 추가</li>
+                        <li>Task 3: 발표 자료(Canva) 제작 시작 (알고리즘 설계 부분부터 채우기)</li>
+                    </ul>
+                </div>
+                <!-- 5차시 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot border-gray-200"></div>
+                    <span class="text-sm font-semibold text-gray-400">5차시</span>
+                    <h3 class="text-xl font-bold text-gray-100 mt-1 mb-2">[FINALIZE] 최종 디버깅 및 발표 준비</h3>
+                    <p class="font-medium text-gray-200 mb-3">Mission: 프로젝트를 '완성'하고 최종 리허설을 진행한다.</p>
+                    <ul class="list-disc list-outside text-gray-300 space-y-1 pl-5">
+                        <li>Task 1: 최종 코드 완성 및 가독성을 위한 주석(Comments) 작업</li>
+                        <li>Task 2: 최종 발표 자료(Canva) 완성 (시연 영상/캡처 포함)</li>
+                        <li>Task 3: 팀 내 최종 발표 리허설 (시간 배분, Q&A 대비)</li>
+                    </ul>
+                </div>
+                <!-- 6차시 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot border-cyan-400"></div>
+                    <span class="text-sm font-semibold text-gray-400">6차시</span>
+                    <h3 class="text-xl font-bold text-cyan-300 mt-1 mb-2">[REPORT] 최종 발표 및 평가</h3>
+                    <p class="font-medium text-gray-200 mb-3">Mission: 6주간의 여정을 공유하고 증명하라!</p>
+                    <ul class="list-disc list-outside text-gray-300 space-y-1 pl-5">
+                        <li>Task 1: 팀별 최종 프로젝트 발표 (발표 7분, Q&A 3분 엄수)</li>
+                        <li>Task 2: (개별) 자기 평가 및 동료 평가 제출 (수업 시간 내 완료)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. 필수 자원 (내용 동일 - 캔바 링크 업데이트됨) -->
+        <section id="toolkit" class="mb-12">
+            <h2 class="text-3xl font-bold text-indigo-400 mb-6 flex items-center">
+                <i class="fa-solid fa-toolbox mr-3"></i>5. 필수 자원 (Essential Toolkit)
+            </h2>
+            <p class="text-gray-400 mb-6">최고의 요원은 도구를 탓하지 않지만, 최고의 도구를 사용합니다.</p>
+            <div class="space-y-4">
+                <a href="https://docs.google.com/document/d/1Cq1EJxMrSYERsLIlyCJInA2ebVdWD9KQk6tidWnMhdY/edit?usp=sharing" target="_blank" class="block bg-gray-700 p-5 rounded-lg shadow-lg hover:bg-gray-600 transition duration-300">
+                    <h3 class="font-bold text-lg text-red-400 mb-1">[필독] 가상컴퓨터(VM) 설치 매뉴얼</h3>
+                    <p class="text-sm text-gray-300">*모든 개발은 이 가상 환경 내에서 진행하는 것을 원칙으로 합니다.</p>
+                </a>
+                <a href="https://www.anaconda.com/download" target="_blank" class="block bg-gray-700 p-5 rounded-lg shadow-lg hover:bg-gray-600 transition duration-300">
+                    <h3 class="font-bold text-lg text-green-400">개발 환경: Anaconda (Python 배포판)</h3>
+                </a>
+                <a href="https://code.visualstudio.com/" target="_blank" class="block bg-gray-700 p-5 rounded-lg shadow-lg hover:bg-gray-600 transition duration-300">
+                    <h3 class="font-bold text-lg text-blue-400">개발 환경: Visual Studio Code (편집기)</h3>
+                </a>
+                <a href="https://www.canva.com/folder/FAF0DkNQxEk" target="_blank" class="block bg-gray-700 p-5 rounded-lg shadow-lg hover:bg-gray-600 transition duration-300">
+                    <h3 class="font-bold text-lg text-purple-400">발표 자료 제작: Canva (캔바)</h3>
+                    <p class="text-sm text-gray-300">*팀 공유 기능을 적극 활용하세요.</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- 
+        ============================================================
+        SECTION 7: 평가 기준 (Evaluation Criteria) - *** 전면 수정됨 ***
+        ============================================================
+        -->
+        <section id="criteria" class="mb-12">
+            <h2 class="text-3xl font-bold text-indigo-400 mb-6 flex items-center">
+                <i class="fa-solid fa-ruler-combined mr-3"></i>6. 공식 평가 기준 (Official Rubric)
+            </h2>
+            <p class="text-gray-400 mb-8">
+                여러분의 프로젝트는 다음의 공식 평가 기준표(100점 만점)에 따라 평가됩니다. 각 항목의 세부 기준을 "헉" 소리 나게 꼼꼼히 확인하여, 최고의 성과를 거두시기 바랍니다. (총점 100점, 반영비율 40%)
+            </p>
+
+            <!-- Rubric Table -->
+            <div class="bg-gray-700 rounded-lg shadow-lg overflow-x-auto">
+                <table class="w-full text-left border-collapse rubric-table">
+                    <thead class="bg-gray-800 text-lg text-gray-100">
+                        <tr>
+                            <th class="p-4 w-1/5">평가 요소</th>
+                            <th class="p-4 w-[100px]">만점</th>
+                            <th class="p-4">채점 기준 (수행 수준)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-300">
+                        <!-- 1. 문제 발견 -->
+                        <tr>
+                            <td class="p-4 font-bold align-top" rowspan="4">문제 발견 및<br>해결 방안 탐구</td>
+                            <td class="p-4 font-bold align-top text-center" rowspan="4">20</td>
+                            <td class="criteria-level level-a">
+                                <span class="font-bold text-cyan-300">[20점]</span>
+                                <p>실생활에서 문제를 발견하여 주제를 선정하고 문제 해결을 위해 주제 선정 목적과 의도를 명확히 정의하며, 창의적이고 새로운 가치와 아이디어로 다양한 해결 방법을 제시함.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-level level-b">
+                                <span class="font-bold text-gray-100">[15점]</span>
+                                <p>실생활에서 문제를 발견하여 주제를 선정하였으나 기존 아이디어들과 거의 유사하며, 창의적이고 새로운 가치와 아이디어지만 한 가지 해결 방법만 제시함.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-level level-c">
+                                <span class="font-bold text-gray-400">[10점]</span>
+                                <p>실생활에서 문제를 발견하여 주제를 선정하였으나 프로그래밍으로 해결하기 어려우며, 문제 해결 방법을 찾았지만 창의적이고 새로운 가치와 아이디어가 아님.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-level level-d">
+                                <span class="font-bold text-red-400">[5점]</span>
+                                <p>실생활에서 문제를 발견하여 주제를 선정하지 못하며, 문제 해결 방법을 제시하지 않음.</p>
+                            </td>
+                        </tr>
+
+                        <!-- 2. 프로그램 개발 -->
+                        <tr>
+                            <td class="p-4 font-bold align-top" rowspan="4">프로그램 개발</td>
+                            <td class="p-4 font-bold align-top text-center" rowspan="4">40</td>
+                            <td class="criteria-level level-a">
+                                <span class="font-bold text-cyan-300">[40점]</span>
+                                <p>문제해결에 충분한 소스코드를 LOC 20줄 이상으로 구성하고, 프로그래밍 실행 과정 중 발생하는 모든 오류를 수정하여 오류가 발견되지 않음.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-level level-b">
+                                <span class="font-bold text-gray-100">[30점]</span>
+                                <p>문제해결에 적절한 소스코드를 LOC 15~19줄로 구성하고, 프로그래밍 실행 과정에서 오류가 1개 발견됨.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-level level-c">
+                                <span class="font-bold text-gray-400">[20점]</span>
+                                <p>문제해결에 기본적인 소스코드를 LOC 10~14줄로 구성하고, 프로그래밍 실행 과정에서 오류가 2개 발견됨.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-level level-d">
+                                <span class="font-bold text-red-400">[10점]</span>
+                                <p>문제해결을 위한 소스코드가 LOC 10줄 미만으로 부족하고, 프로그래밍 실행 과정에서 오류가 3개 이상 발견됨.</p>
+                            </td>
+                        </tr>
+
+                        <!-- 3. 포트폴리오 -->
+                        <tr>
+                            <td class="p-4 font-bold align-top" rowspan="4">포트폴리오<br>작성 및 발표</td>
+                            <td class="p-4 font-bold align-top text-center" rowspan="4">25</td>
+                            <td class="criteria-level level-a">
+                                <span class="font-bold text-cyan-300">[25점]</span>
+                                <p>작성한 프로그램 코드를 모두가 이해할 수 있게 정확하고 구체적으로 주석을 작성하여 소스코드를 구조화하여 명확하게 설명하고, 포트폴리오 발표자료 내용이 논리적이고 명료하며 자신감 있는 목소리로 발표함.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-level level-b">
+                                <span class="font-bold text-gray-100">[20점]</span>
+                                <p>작성한 프로그램 코드 주석을 정확하게 작성하여 소스코드를 적절히 설명하고, 포트폴리오 발표자료 내용은 논리적이고 명료하나 발표에 자신감이 다소 부족함.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-level level-c">
+                                <span class="font-bold text-gray-400">[15점]</span>
+                                <p>작성한 프로그램 코드 주석을 의도에 맞게 작성하여 기본적인 설명을 제공하고, 포트폴리오 발표자료 내용이 무난하고 발표 자신감도 보통 수준임.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-level level-d">
+                                <span class="font-bold text-red-400">[5점]</span>
+                                <p>작성한 프로그램 코드 주석 작성에 어려움이 보이며 소스코드 설명이 부족하고, 포트폴리오 발표자료 내용이 논리적이지 않고 명확하지 않으며 발표도 요지를 파악할 수 없을 만큼 미흡함.</p>
+                            </td>
+                        </tr>
+
+                        <!-- 4. 프로그램 공유 -->
+                        <tr>
+                            <td class="p-4 font-bold align-top" rowspan="2">프로그램 공유</td>
+                            <td class="p-4 font-bold align-top text-center" rowspan="2">5</td>
+                            <td class="criteria-level level-a">
+                                <span class="font-bold text-cyan-300">[5점]</span>
+                                <p>작성한 프로그램을 클라우드를 통해 공유함.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-level level-d">
+                                <span class="font-bold text-red-400">[1점]</span>
+                                <p>작성한 프로그램을 클라우드를 통해 공유하지 않음.</p>
+                            </td>
+                        </tr>
+                        
+                        <!-- 5. 태도 및 참여도 -->
+                        <tr>
+                            <td class="p-4 font-bold align-top" rowspan="4">태도 및 참여도</td>
+                            <td class="p-4 font-bold align-top text-center" rowspan="4">10</td>
+                            <td class="criteria-level level-a">
+                                <span class="font-bold text-cyan-300">[10점]</span>
+                                <p>문제해결을 위해 적극적으로 의견을 나누고 다양한 정보를 공유하며 자신이 맡은 역할을 성실히 해냄.</p>
+</td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-level level-b">
+                                <span class="font-bold text-gray-100">[7점]</span>
+                                <p>문제해결을 위해 의견을 나누고 정보를 공유하며 자신이 맡은 역할을 어느정도 해냄.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-level level-c">
+                                <span class="font-bold text-gray-400">[4점]</span>
+                                <p>문제해결을 위해 최소한의 의견과 정보만 공유하며 자신이 맡은 역할을 조금만 해냄.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-level level-d">
+                                <span class="font-bold text-red-400">[1H점]</span>
+                                <p>문제해결을 위한 의견을 나누거나 정보를 공유하지 않고 자신이 맡은 역할을 해내지 못함.</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Grading Scale -->
+            <div class="mt-8 bg-gray-700 p-6 rounded-lg shadow-inner">
+                <h3 class="text-xl font-bold text-gray-100 mb-3 flex items-center"><i class="fa-solid fa-graduation-cap mr-3"></i>최종 성취 수준 (A/B/C)</h3>
+                <p class="text-gray-300"><span class="font-bold text-cyan-300 text-lg">A 등급:</span> 80점 이상</p>
+                <p class="text-gray-300"><span class="font-bold text-gray-100 text-lg">B 등급:</span> 80점 미만 ~ 60점 이상</p>
+                <p class="text-gray-300"><span class="font-bold text-gray-400 text-lg">C 등급:</span> 60점 미만</p>
+                <p class="text-sm text-gray-500 mt-4">* 성취기준: C 프로그래밍 기초 개념을 이해하고, 프로그램 기획부터 설계, 구현, 테스트까지 전 과정을 효율적으로 완성할 수 있다.</p>
+            </div>
+        </section>
+
+
+        <!-- 8. 교사의 메시지 (내용 동일) -->
+        <section id="message" class="mb-6">
+            <h2 class="text-3xl font-bold text-indigo-400 mb-6 flex items-center">
+                <i class="fa-solid fa-comment-dots mr-3"></i>7. 교사의 메시지 (A Message from HQ)
+            </h2>
+            <div class="bg-gray-900 border border-indigo-500 p-8 rounded-lg shadow-xl relative">
+                <i class="fa-solid fa-quote-left text-5xl text-indigo-700 absolute top-4 left-6 opacity-30"></i>
+                <div class="relative z-10 space-y-4 text-gray-200 text-lg">
+                    <p>지난 10년간 수많은 학생들의 프로젝트를 봐왔습니다. 가장 빛나는 프로젝트는 기술적으로 가장 화려한 코드가 아니라, '왜' 이 문제를 풀어야 하는지에 대한 고민이 깊고, '함께' 벽을 넘기 위해 끝까지 노력한 팀의 것이었습니다.</p>
+                    <p>6주간의 여정은 분명 험난할 것입니다. 막힐 때는 주저 말고 도움을 요청하십시오. 동료에게, 그리고 저에게. 여러분의 도전을 전폭적으로 지지합니다.</p>
+                    <p class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-300 pt-4">자, 이제 여러분의 아이디어를 코드로 만들어봅시다. <br>미션 스타트!</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>
+
